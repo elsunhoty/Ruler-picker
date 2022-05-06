@@ -4,6 +4,8 @@
 
 #### Android view that uses ruler Picker.
 
+![profile-demo.gif](/screenshot/Screenshot_20220506_035907.png)
+
 ## Features:
 - Highly customizable.
 - Easy to integrate. All you have to do is add the view into your XML and listen for the value changes.
