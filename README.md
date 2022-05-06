@@ -3,8 +3,8 @@
 [![Build Status](https://travis-ci.org/kevalpatel2106/android-ruler-picker.svg?branch=master)](https://travis-ci.org/kevalpatel2106/android-ruler-picker) [![API](https://img.shields.io/badge/API-21%2B-orange.svg?style=flat)](https://android-arsenal.com/api?level=14)
 
 #### Android view that uses ruler Picker.
-
-![profile-demo.gif](/screenshot/Screenshot_20220506_035907.png)
+![screenShot_1](/screenshot/Screenshot_20220506_040914.png)
+![screenShot_2](/screenshot/Screenshot_20220506_035907.png)
 
 ## Features:
 - Highly customizable.
