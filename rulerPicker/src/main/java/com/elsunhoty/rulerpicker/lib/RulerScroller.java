@@ -49,15 +49,18 @@ class RulerScroller extends HorizontalScrollView {
 
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-        // TODO Auto-generated method stub
-        //      Log.e("Scrollinggg", "X from ["+oldl+"] to ["+l+"]");
         int currentRealValue = (int) ((l + rulerMinValue) / hashMarkDistance);
         if (mListener != null)
             mListener.onRulerValueChanges(currentRealValue);
         super.onScrollChanged(l, t, oldl, oldt);
     }
 
-    public void setRulerEvent(OnRulerEvent onRulerEvent) {
+    void setRulerEvent(OnRulerEvent onRulerEvent) {
         this.mListener = onRulerEvent;
+    }
+
+    int getCurrentValue() {
+        int scrollX = getScrollX();
+        return (int) ((scrollX + rulerMinValue) / hashMarkDistance);
     }
 }

@@ -14,13 +14,28 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setupView()
+        actions()
+
+    }
+
+    private fun setupView() {
         viewRuler= findViewById(R.id.viewRuler)
         tvOnRulerValueChanges= findViewById(R.id.tvOnRulerValueChanges)
         tvCurrentValue= findViewById(R.id.tvCurrentValue)
         btnCurrentValue= findViewById(R.id.btnCurrentValue)
+    }
+
+    private fun actions() {
         viewRuler.setOnRulerEvent {
             tvOnRulerValueChanges.text =
                 "onRulerValueChanges : $it"
         }
+        btnCurrentValue.setOnClickListener { _->
+          val currentValue =  viewRuler.currentValue
+            tvCurrentValue.text =
+                "CurrentValue : $currentValue"
+        }
     }
+
 }

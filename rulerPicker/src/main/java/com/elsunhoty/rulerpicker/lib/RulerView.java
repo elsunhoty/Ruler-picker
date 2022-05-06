@@ -40,12 +40,6 @@ public class RulerView extends FrameLayout {
         setUpView(context, attrs);
     }
 
-    public void setOnRulerEvent(OnRulerEvent onRulerEvent) {
-        if (rulerScroller!=null){
-            rulerScroller.setRulerEvent(onRulerEvent);
-        }
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -83,4 +77,18 @@ public class RulerView extends FrameLayout {
         typedArray.recycle();
 
     }
+
+    public int getCurrentValue() {
+        if (rulerScroller!=null){
+           return rulerScroller.getCurrentValue();
+        }
+       throw new IllegalArgumentException("rulerScroller is null");
+    }
+
+    public void setOnRulerEvent(OnRulerEvent onRulerEvent) {
+        if (rulerScroller!=null){
+            rulerScroller.setRulerEvent(onRulerEvent);
+        }
+    }
+
 }
