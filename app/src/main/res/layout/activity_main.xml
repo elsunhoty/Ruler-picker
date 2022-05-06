@@ -7,10 +7,26 @@
     tools:context=".MainActivity">
 
     <com.elsunhoty.rulerpicker.lib.RulerView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:ruler_max_value="300"
+        app:ruler_hash_mark_interval="5"
+        app:ruler_hash_mark_distance="16dp"
+        app:ruler_long_hash_mark_width="4dp"
+        app:ruler_long_hash_mark_height="80dp"
+        app:ruler_long_hash_mark_color="#F44336"
+        app:ruler_long_hash_mark_text_size="12sp"
+        app:ruler_long_hash_mark_text_color="#03A9F4"
+        app:ruler_long_hash_mark_text_margin_top="16dp"
+        app:ruler_small_hash_mark_height="40dp"
+        app:ruler_small_hash_mark_width="3dp"
+        app:ruler_small_hash_mark_color="#4CAF50"
+        app:ruler_indicator_height="120dp"
+        app:ruler_indicator_width="4dp"
+        app:ruler_indicator_color="#57FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+      />
 </androidx.constraintlayout.widget.ConstraintLayout>

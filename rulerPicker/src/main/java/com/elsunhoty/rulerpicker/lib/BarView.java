@@ -2,6 +2,7 @@ package com.elsunhoty.rulerpicker.lib;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,38 +14,88 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.elsunhoty.rulerpicker.R;
+
 class BarView extends View {
     int rulerMinValue = 0;
-    int rulerMaxValue = 90;
+    int rulerMaxValue = Defaults.MAX_VALUE;
 
-    int tallIndicatorInterval = 9;
+    int hashMarkInterval = Defaults.HASH_MARK_INTERVAL;
 
-    int indicatorDistance = 100;
+    float hashMarkDistance = Defaults.HASH_MARK_DISTANCE;
 
-    int tallIndicatorWith = 8;
-    int tallIndicatorHeight = 160;
-    int tallIndicatorTextSize = 40;
-    int tallIndicatorTextColor = Color.RED;
-    int tallIndicatorColor = Color.GREEN;
-    int tallIndicatorTextTopMargin = 50;
+    float longHashMarkWidth = Defaults.LONG_HASH_MARK_WIDTH;
+    float longHashMarkHeight = Defaults.LONG_HASH_MARK_HEIGHT;
+    float longHashMarkTextSize = Defaults.LONG_HASH_MARK_TEXT_SIZE;
+    int longHashMarkTextColor = Defaults.LONG_HASH_MARK_TEXT_COLOR;
+    int longHashMarkColor = Defaults.LONG_HASH_MARK_COLOR;
+    float longHashMarkTextTopMargin = Defaults.LONG_HASH_MARK_TEXT_TOP_MARGIN;
 
-    int shortIndicatorWith=4;
-    int shortIndicatorHeight=80;
-    int shortIndicatorColor = Color.BLUE;
+    float smallHashMarkWidth =Defaults.SMALL_HASH_MARK_WIDTH;
+    float smallHashMarkHeight =Defaults.SMALL_HASH_MARK_HEIGHT;
+    int smallHashMarkColor = Defaults.SMALL_HASH_MARK_COLOR;
 
     int viewHeight = 0;
     int viewWidth = 0;
 
     public BarView(Context context) {
         super(context);
+        setUpAttributes(null);
     }
 
     public BarView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        setUpAttributes(attrs);
     }
 
     public BarView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setUpAttributes(attrs);
+    }
+
+    private void setUpAttributes(AttributeSet attrs) {
+        if (attrs!=null){
+            TypedArray typedArray = getContext().getTheme().obtainStyledAttributes(
+                    attrs,
+                    R.styleable.RulerView, 0, 0
+            );
+             rulerMaxValue = typedArray.getInt(R.styleable
+                    .RulerView_ruler_max_value, Defaults.MAX_VALUE);
+
+             hashMarkInterval = typedArray.getInt(R.styleable
+                    .RulerView_ruler_hash_mark_interval, Defaults.HASH_MARK_INTERVAL);
+
+            hashMarkDistance = typedArray.getDimension(R.styleable
+                    .RulerView_ruler_hash_mark_distance, Defaults.HASH_MARK_DISTANCE);
+
+            longHashMarkWidth = typedArray.getDimension(R.styleable
+                    .RulerView_ruler_long_hash_mark_width, Defaults.LONG_HASH_MARK_WIDTH);
+
+            longHashMarkHeight = typedArray.getDimension(R.styleable
+                    .RulerView_ruler_long_hash_mark_height, Defaults.LONG_HASH_MARK_HEIGHT);
+
+            longHashMarkTextSize = typedArray.getDimension(R.styleable
+                    .RulerView_ruler_long_hash_mark_text_size, Defaults.LONG_HASH_MARK_TEXT_SIZE);
+
+            longHashMarkTextColor = typedArray.getColor(R.styleable
+                    .RulerView_ruler_long_hash_mark_text_color, Defaults.LONG_HASH_MARK_TEXT_COLOR);
+
+            longHashMarkColor = typedArray.getColor(R.styleable
+                    .RulerView_ruler_long_hash_mark_color, Defaults.LONG_HASH_MARK_COLOR);
+
+            longHashMarkTextTopMargin = typedArray.getDimension(R.styleable
+                    .RulerView_ruler_long_hash_mark_text_margin_top, Defaults.LONG_HASH_MARK_TEXT_TOP_MARGIN);
+
+            smallHashMarkWidth = typedArray.getDimension(R.styleable
+                    .RulerView_ruler_small_hash_mark_width, Defaults.SMALL_HASH_MARK_WIDTH);
+
+            smallHashMarkHeight = typedArray.getDimension(R.styleable
+                    .RulerView_ruler_small_hash_mark_height, Defaults.SMALL_HASH_MARK_HEIGHT);
+
+            smallHashMarkColor = typedArray.getColor(R.styleable
+                    .RulerView_ruler_small_hash_mark_color, Defaults.SMALL_HASH_MARK_COLOR);
+            typedArray.recycle();
+        }
     }
 
     @Override
@@ -54,13 +105,12 @@ class BarView extends View {
         View pa = (View) getParent();
         viewHeight = pa.getHeight();
         viewWidth = widthMeasureSpec;
-        Log.e("XXX","==> "+viewWidth +"==> "+widthMeasureSpec+"==> "+heightMeasureSpec);
-        int tallIndicatorCounter  = ((rulerMaxValue - rulerMinValue) / tallIndicatorInterval)+1;
-        int tallIndicatorTotalWidth = tallIndicatorCounter*tallIndicatorWith;
-        int shortIndicatorCounter = (rulerMaxValue - rulerMinValue) - tallIndicatorCounter;
-        int shortIndicatorTotalWidth = shortIndicatorCounter *shortIndicatorWith;
-        int width = widthMeasureSpec
-                + ((rulerMaxValue - rulerMinValue) * indicatorDistance);
+//        int tallIndicatorCounter  = ((rulerMaxValue - rulerMinValue) / hashMarkInterval)+1;
+//        int tallIndicatorTotalWidth = tallIndicatorCounter* longHashMarkWidth;
+//        int shortIndicatorCounter = (rulerMaxValue - rulerMinValue) - tallIndicatorCounter;
+//        int shortIndicatorTotalWidth = shortIndicatorCounter * smallHashMarkWidth;
+        int width = (int) (widthMeasureSpec
+                        + ((rulerMaxValue - rulerMinValue) * hashMarkDistance));
 //                + tallIndicatorTotalWidth
 //                + shortIndicatorTotalWidth;
         setMeasuredDimension(width, heightMeasureSpec);
@@ -69,7 +119,6 @@ class BarView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         viewHeight = getHeight();
-        Log.e("Parent", viewHeight + "//" + viewWidth);
         drawChart(canvas);
     }
 
@@ -85,47 +134,45 @@ class BarView extends View {
         int startDrawX = viewWidth / 2;
         int startDrawY = viewHeight / 2;
 
-        Paint myPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        myPaint.setStrokeWidth(8);
-        myPaint.setColor(Color.WHITE);
-        myPaint.setStyle(Paint.Style.STROKE);
-        myPaint.setAntiAlias(true);
+        Paint hashMarkPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        hashMarkPaint.setStyle(Paint.Style.STROKE);
+        hashMarkPaint.setAntiAlias(true);
 
         Paint bottomTextPaint = new Paint();
         bottomTextPaint.setStyle(Paint.Style.FILL);
         bottomTextPaint.setAntiAlias(true);
         canvas.drawPaint(bottomTextPaint);
-        bottomTextPaint.setColor(tallIndicatorTextColor);
-        bottomTextPaint.setTextSize(tallIndicatorTextSize);
+        bottomTextPaint.setColor(longHashMarkTextColor);
+        bottomTextPaint.setTextSize(longHashMarkTextSize);
         for (int i = rulerMinValue ; i <= rulerMaxValue; i++) {
-            int startLineX = startDrawX + (indicatorDistance * i);
+            int startLineX = (int) (startDrawX + (hashMarkDistance * i));
             //Draw Big Indicator
-            if ((i % tallIndicatorInterval) == 0) {
+            if ((i % hashMarkInterval) == 0) {
                 // main Line
-                myPaint.setStrokeWidth(tallIndicatorWith);
-                myPaint.setColor(tallIndicatorColor);
+                hashMarkPaint.setStrokeWidth(longHashMarkWidth);
+                hashMarkPaint.setColor(longHashMarkColor);
                 canvas.drawLine(startLineX,
-                        startDrawY + (int)(tallIndicatorHeight/2),
+                        startDrawY + (int)(longHashMarkHeight /2),
                         startLineX,
-                        startDrawY - (int)(tallIndicatorHeight/2),
-                        myPaint); // main line
+                        startDrawY - (int)(longHashMarkHeight /2),
+                        hashMarkPaint); // main line
 
                 Rect bounds = new Rect();
                 bottomTextPaint.getTextBounds(i + "", 0, (i + "").length(), bounds);
                 int textWidth = bounds.width();
                 canvas.drawText(i + "",
                         startLineX - (int)(textWidth/2),
-                        startDrawY + (int)(tallIndicatorHeight/2) + tallIndicatorTextTopMargin,
+                        startDrawY + (int)(longHashMarkHeight /2) + longHashMarkTextTopMargin,
                         bottomTextPaint);
             } else {
                 // second Line
-                myPaint.setStrokeWidth(shortIndicatorWith);
-                myPaint.setColor(shortIndicatorColor);
+                hashMarkPaint.setStrokeWidth(smallHashMarkWidth);
+                hashMarkPaint.setColor(smallHashMarkColor);
                 canvas.drawLine(startLineX,
-                        startDrawY + (int)(shortIndicatorHeight/2),
+                        startDrawY + (int)(smallHashMarkHeight /2),
                         startLineX,
-                        startDrawY - (int) (shortIndicatorHeight/2),
-                        myPaint); // second line
+                        startDrawY - (int) (smallHashMarkHeight /2),
+                        hashMarkPaint); // second line
 
             }
         }

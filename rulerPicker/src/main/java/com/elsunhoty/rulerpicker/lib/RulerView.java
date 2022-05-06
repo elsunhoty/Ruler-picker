@@ -1,48 +1,79 @@
 package com.elsunhoty.rulerpicker.lib;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.elsunhoty.rulerpicker.R;
+
 public class RulerView extends FrameLayout {
+    private float indicatorHeight = Defaults.INDICATOR_HEIGHT;
+    private float indicatorWidth = Defaults.INDICATOR_WIDTH;
+    private int indicatorColor = Defaults.INDICATOR_COLOR;
     public RulerView(@NonNull Context context) {
         super(context);
-        setUpView(context);
+        setUpView(context, null);
     }
 
     public RulerView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        setUpView(context);
+        setUpView(context,attrs);
     }
 
     public RulerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setUpView(context);
+        setUpView(context, attrs);
     }
 
     public RulerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        setUpView(context);
+        setUpView(context, attrs);
     }
 
-    private void setUpView(Context context) {
-        RulerScroller rulerScroller = new RulerScroller(context);
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+    }
+
+    private void setUpView(Context context, AttributeSet attrs) {
+        if (attrs!=null){
+            setUpAttributes(attrs);
+        }
+        RulerScroller rulerScroller = new RulerScroller(context,attrs);
         addView(rulerScroller);
 
         View indicator = new View(context);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                8,
-                260);
+                (int)indicatorWidth,
+                (int)indicatorHeight);
         params.gravity = Gravity.CENTER;
         indicator.setLayoutParams(params);
-        indicator.setBackgroundColor(Color.CYAN);
+        indicator.setBackgroundColor(indicatorColor);
         addView(indicator);
+    }
+
+    private void setUpAttributes(AttributeSet attrs) {
+        TypedArray typedArray = getContext().getTheme().obtainStyledAttributes(
+                attrs,
+                R.styleable.RulerView, 0, 0
+        );
+        indicatorHeight = typedArray.getDimension(R.styleable.RulerView_ruler_indicator_height,
+                Defaults.INDICATOR_HEIGHT);
+        indicatorWidth = typedArray.getDimension(R.styleable.RulerView_ruler_indicator_width,
+                Defaults.INDICATOR_WIDTH);
+
+        indicatorColor = typedArray.getColor(R.styleable.RulerView_ruler_indicator_color,
+                Defaults.INDICATOR_COLOR);
+        typedArray.recycle();
+
     }
 }
