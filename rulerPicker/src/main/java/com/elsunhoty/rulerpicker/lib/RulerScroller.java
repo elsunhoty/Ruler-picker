@@ -11,6 +11,7 @@ import com.elsunhoty.rulerpicker.R;
 
 class RulerScroller extends HorizontalScrollView {
     int rulerMinValue = 0;
+    int rulerMaxValue = Defaults.MAX_VALUE;
     float hashMarkDistance = Defaults.HASH_MARK_DISTANCE;
     private OnRulerEvent mListener;
 
@@ -44,6 +45,8 @@ class RulerScroller extends HorizontalScrollView {
         );
         hashMarkDistance = typedArray.getDimension(R.styleable.RulerView_ruler_hash_mark_distance,
                 Defaults.HASH_MARK_DISTANCE);
+        rulerMaxValue = typedArray.getInt(R.styleable.RulerView_ruler_max_value,
+                Defaults.MAX_VALUE);
     }
 
 
@@ -62,5 +65,17 @@ class RulerScroller extends HorizontalScrollView {
     int getCurrentValue() {
         int scrollX = getScrollX();
         return (int) ((scrollX + rulerMinValue) / hashMarkDistance);
+    }
+
+    public void setCurrentValue(int value) {
+        if (value>rulerMaxValue ||value<rulerMinValue){
+            String message = " The Value "+value
+                    +" is not between Max Value "+rulerMaxValue
+                    +" and min  Value "+rulerMinValue;
+            throw new IllegalArgumentException(message);
+        }else {
+            int scrollValue = (int) ((value * hashMarkDistance ) - rulerMinValue);
+            setScrollX(scrollValue);
+        }
     }
 }

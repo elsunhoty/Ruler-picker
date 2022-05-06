@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvOnRulerValueChanges: TextView
     private lateinit var tvCurrentValue: TextView
     private lateinit var btnCurrentValue: Button
+    private lateinit var btnScrollToPosition: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         tvOnRulerValueChanges= findViewById(R.id.tvOnRulerValueChanges)
         tvCurrentValue= findViewById(R.id.tvCurrentValue)
         btnCurrentValue= findViewById(R.id.btnCurrentValue)
+        btnScrollToPosition= findViewById(R.id.btnScrollToPosition)
     }
 
     private fun actions() {
@@ -35,6 +37,9 @@ class MainActivity : AppCompatActivity() {
           val currentValue =  viewRuler.currentValue
             tvCurrentValue.text =
                 "CurrentValue : $currentValue"
+        }
+        btnScrollToPosition.setOnClickListener { _->
+            viewRuler.currentValue = 100
         }
     }
 

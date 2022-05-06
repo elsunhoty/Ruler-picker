@@ -84,6 +84,13 @@ public class RulerView extends FrameLayout {
         }
        throw new IllegalArgumentException("rulerScroller is null");
     }
+    public void setCurrentValue(int value){
+        if (rulerScroller!=null){
+           rulerScroller.setCurrentValue(value);
+           return;
+        }
+        throw new IllegalArgumentException("rulerScroller is null");
+    }
 
     public void setOnRulerEvent(OnRulerEvent onRulerEvent) {
         if (rulerScroller!=null){
