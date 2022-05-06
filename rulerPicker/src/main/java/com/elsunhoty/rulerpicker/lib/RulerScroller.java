@@ -12,8 +12,7 @@ import com.elsunhoty.rulerpicker.R;
 class RulerScroller extends HorizontalScrollView {
     int rulerMinValue = 0;
     float hashMarkDistance = Defaults.HASH_MARK_DISTANCE;
-
-    private onScrolled mListener = null;
+    private OnRulerEvent mListener;
 
     public RulerScroller(Context context) {
         super(context);
@@ -22,7 +21,7 @@ class RulerScroller extends HorizontalScrollView {
 
     public RulerScroller(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setUpView(context,attrs);
+        setUpView(context, attrs);
 
     }
 
@@ -52,18 +51,13 @@ class RulerScroller extends HorizontalScrollView {
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         // TODO Auto-generated method stub
         //      Log.e("Scrollinggg", "X from ["+oldl+"] to ["+l+"]");
-        int currentRealValue = (int) ((l+rulerMinValue) / hashMarkDistance);
-        Log.e("currentRealValue","==> "+currentRealValue);
+        int currentRealValue = (int) ((l + rulerMinValue) / hashMarkDistance);
         if (mListener != null)
-//            mListener.onclick(y);
+            mListener.onRulerValueChanges(currentRealValue);
         super.onScrollChanged(l, t, oldl, oldt);
     }
 
-    public void setOnScrollingListener(onScrolled onScrolled) {
-        mListener = onScrolled;
-    }
-
-    public interface onScrolled {
-        void onclick(int value);
+    public void setRulerEvent(OnRulerEvent onRulerEvent) {
+        this.mListener = onRulerEvent;
     }
 }

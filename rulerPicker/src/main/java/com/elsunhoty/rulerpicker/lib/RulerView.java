@@ -19,6 +19,7 @@ public class RulerView extends FrameLayout {
     private float indicatorHeight = Defaults.INDICATOR_HEIGHT;
     private float indicatorWidth = Defaults.INDICATOR_WIDTH;
     private int indicatorColor = Defaults.INDICATOR_COLOR;
+    RulerScroller rulerScroller;
     public RulerView(@NonNull Context context) {
         super(context);
         setUpView(context, null);
@@ -39,6 +40,12 @@ public class RulerView extends FrameLayout {
         setUpView(context, attrs);
     }
 
+    public void setOnRulerEvent(OnRulerEvent onRulerEvent) {
+        if (rulerScroller!=null){
+            rulerScroller.setRulerEvent(onRulerEvent);
+        }
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -48,7 +55,7 @@ public class RulerView extends FrameLayout {
         if (attrs!=null){
             setUpAttributes(attrs);
         }
-        RulerScroller rulerScroller = new RulerScroller(context,attrs);
+        rulerScroller = new RulerScroller(context,attrs);
         addView(rulerScroller);
 
         View indicator = new View(context);

@@ -3,8 +3,11 @@
 [![Build Status](https://travis-ci.org/kevalpatel2106/android-ruler-picker.svg?branch=master)](https://travis-ci.org/kevalpatel2106/android-ruler-picker) [![API](https://img.shields.io/badge/API-21%2B-orange.svg?style=flat)](https://android-arsenal.com/api?level=14)
 
 #### Android view that uses ruler Picker.
-![screenShot_1](/screenshot/Screenshot_20220506_040914.png)
-![screenShot_2](/screenshot/Screenshot_20220506_035907.png)
+| | |
+|:---:|:---:|
+|![screenShot_1](/screenshot/Screenshot_20220506_040914.png)|![screenShot_2](/screenshot/Screenshot_20220506_035907.png)
+
+
 
 ## Features:
 - Highly customizable.
@@ -13,7 +16,7 @@
 
 ## Implementation:
 
-- Library provides XML attributes to customize 
+- Library provides XML attributes to customize
 
 |Attribute|Type|Java/Kotlin|Description|
 |:---:|:---:|:---:|:---:|
@@ -39,7 +42,7 @@ Every small or large contribution to this project is appreciated..
 
 
 ## License
-Copyright 2018 Keval Patel
+Copyright 2020 Ahmed Hamed
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
