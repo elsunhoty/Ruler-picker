@@ -7,14 +7,54 @@
 |:---:|:---:|
 |![screenShot_1](/screenshot/Screenshot_20220506_040914.png)|![screenShot_2](/screenshot/Screenshot_20220506_035907.png)
 
+# Installation
+Add the following dependency to your `build.gradle` file:
 
+```
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+and
+```
+dependencies {
+    implementation 'com.github.elsunhoty:Ruler-picker:1.0'
+}
+```
 
-## Features:
-- Highly customizable.
-- Easy to integrate. All you have to do is add the view into your XML and listen for the value changes.
-
+ 
 
 ## Implementation:
+
+You can specify the attributes from a layout XML like:
+```xml
+ <com.elsunhoty.rulerpicker.lib.RulerView
+        android:id="@+id/viewRuler"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.13"
+        app:ruler_hash_mark_distance="10dp"
+        app:ruler_hash_mark_interval="8"
+        app:ruler_indicator_color="#73FF7474"
+        app:ruler_indicator_height="60dp"
+        app:ruler_indicator_width="3dp"
+        app:ruler_long_hash_mark_color="#FFFFFF"
+        app:ruler_long_hash_mark_height="40dp"
+        app:ruler_long_hash_mark_text_color="#BFBFBF"
+        app:ruler_long_hash_mark_text_margin_top="14dp"
+        app:ruler_long_hash_mark_text_size="12sp"
+        app:ruler_long_hash_mark_width="2dp"
+        app:ruler_max_value="300"
+        app:ruler_small_hash_mark_color="#CFCFCF"
+        app:ruler_small_hash_mark_height="30dp"
+        app:ruler_small_hash_mark_width="1dp" />
+```
 
 - Library provides XML attributes to customize
 
