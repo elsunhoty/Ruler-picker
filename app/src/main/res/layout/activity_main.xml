@@ -8,6 +8,7 @@
 
     <com.elsunhoty.rulerpicker.lib.RulerView
         android:id="@+id/viewRuler"
+        android:background="@color/black"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -40,7 +40,7 @@ afterEvaluate {
         publications{
             release(MavenPublication){
                 from components.release
-                groupId = 'com.github.elsunhoty'
+                groupId = 'com.github.uriel-frankel'
                 artifactId = 'Ruler-picker'
                 version='1.1'
             }
