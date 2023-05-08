@@ -30,10 +30,11 @@ class BarView extends View {
     int longHashMarkTextColor = Defaults.LONG_HASH_MARK_TEXT_COLOR;
     int longHashMarkColor = Defaults.LONG_HASH_MARK_COLOR;
     float longHashMarkTextTopMargin = Defaults.LONG_HASH_MARK_TEXT_TOP_MARGIN;
-
-    float smallHashMarkWidth =Defaults.SMALL_HASH_MARK_WIDTH;
-    float smallHashMarkHeight =Defaults.SMALL_HASH_MARK_HEIGHT;
+    boolean longHashMarkTextVisible = true;
+    float smallHashMarkWidth = Defaults.SMALL_HASH_MARK_WIDTH;
+    float smallHashMarkHeight = Defaults.SMALL_HASH_MARK_HEIGHT;
     int smallHashMarkColor = Defaults.SMALL_HASH_MARK_COLOR;
+    RulerGravity gravity = RulerGravity.CENTER;
 
     int viewHeight = 0;
     int viewWidth = 0;
@@ -54,15 +55,15 @@ class BarView extends View {
     }
 
     private void setUpAttributes(AttributeSet attrs) {
-        if (attrs!=null){
+        if (attrs != null) {
             TypedArray typedArray = getContext().getTheme().obtainStyledAttributes(
                     attrs,
                     R.styleable.RulerView, 0, 0
             );
-             rulerMaxValue = typedArray.getInt(R.styleable
+            rulerMaxValue = typedArray.getInt(R.styleable
                     .RulerView_ruler_max_value, Defaults.MAX_VALUE);
 
-             hashMarkInterval = typedArray.getInt(R.styleable
+            hashMarkInterval = typedArray.getInt(R.styleable
                     .RulerView_ruler_hash_mark_interval, Defaults.HASH_MARK_INTERVAL);
 
             hashMarkDistance = typedArray.getDimension(R.styleable
@@ -94,6 +95,10 @@ class BarView extends View {
 
             smallHashMarkColor = typedArray.getColor(R.styleable
                     .RulerView_ruler_small_hash_mark_color, Defaults.SMALL_HASH_MARK_COLOR);
+
+            longHashMarkTextVisible = typedArray.getBoolean(R.styleable
+                    .RulerView_ruler_long_hash_mark_text_visible, true);
+            gravity = RulerGravity.parse(typedArray.getInt(R.styleable.RulerView_ruler_hash_mark_gravity, 1));
             typedArray.recycle();
         }
     }
@@ -110,7 +115,7 @@ class BarView extends View {
 //        int shortIndicatorCounter = (rulerMaxValue - rulerMinValue) - tallIndicatorCounter;
 //        int shortIndicatorTotalWidth = shortIndicatorCounter * smallHashMarkWidth;
         int width = (int) (widthMeasureSpec
-                        + ((rulerMaxValue - rulerMinValue) * hashMarkDistance));
+                + ((rulerMaxValue - rulerMinValue) * hashMarkDistance));
 //                + tallIndicatorTotalWidth
 //                + shortIndicatorTotalWidth;
         setMeasuredDimension(width, heightMeasureSpec);
@@ -132,7 +137,32 @@ class BarView extends View {
 
 
         int startDrawX = viewWidth / 2;
-        int startDrawY = viewHeight / 2;
+
+        int longHashStartY = 0;
+        int smallHashStartY = 0;
+        int textBaselineY = 0;
+
+        switch (gravity) {
+            case TOP:
+                longHashStartY = 0;
+                smallHashStartY = 0;
+                textBaselineY = (int) (longHashMarkHeight + longHashMarkTextTopMargin);
+                break;
+            case CENTER:
+                longHashStartY = (int) (viewHeight / 2 - longHashMarkHeight / 2);
+                smallHashStartY = (int) (viewHeight / 2 - smallHashMarkHeight / 2);
+                textBaselineY = (int) (longHashStartY + (int) (longHashMarkHeight) + longHashMarkTextTopMargin);
+                break;
+            case BOTTOM:
+                longHashStartY = (int) (viewHeight - longHashMarkHeight);
+                smallHashStartY = (int) (viewHeight - smallHashMarkHeight);
+                textBaselineY = (int) (longHashStartY - longHashMarkTextTopMargin);
+
+                break;
+            default:
+                break;
+
+        }
 
         Paint hashMarkPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         hashMarkPaint.setStyle(Paint.Style.STROKE);
@@ -141,10 +171,9 @@ class BarView extends View {
         Paint bottomTextPaint = new Paint();
         bottomTextPaint.setStyle(Paint.Style.FILL);
         bottomTextPaint.setAntiAlias(true);
-        canvas.drawPaint(bottomTextPaint);
         bottomTextPaint.setColor(longHashMarkTextColor);
         bottomTextPaint.setTextSize(longHashMarkTextSize);
-        for (int i = rulerMinValue ; i <= rulerMaxValue; i++) {
+        for (int i = rulerMinValue; i <= rulerMaxValue; i++) {
             int startLineX = (int) (startDrawX + (hashMarkDistance * i));
             //Draw Big Indicator
             if ((i % hashMarkInterval) == 0) {
@@ -152,26 +181,28 @@ class BarView extends View {
                 hashMarkPaint.setStrokeWidth(longHashMarkWidth);
                 hashMarkPaint.setColor(longHashMarkColor);
                 canvas.drawLine(startLineX,
-                        startDrawY + (int)(longHashMarkHeight /2),
+                        longHashStartY,
                         startLineX,
-                        startDrawY - (int)(longHashMarkHeight /2),
+                        longHashStartY + (int) (longHashMarkHeight),
                         hashMarkPaint); // main line
 
-                Rect bounds = new Rect();
-                bottomTextPaint.getTextBounds(i + "", 0, (i + "").length(), bounds);
-                int textWidth = bounds.width();
-                canvas.drawText(i + "",
-                        startLineX - (int)(textWidth/2),
-                        startDrawY + (int)(longHashMarkHeight /2) + longHashMarkTextTopMargin,
-                        bottomTextPaint);
+                if (longHashMarkTextVisible) {
+                    Rect bounds = new Rect();
+                    bottomTextPaint.getTextBounds(i + "", 0, (i + "").length(), bounds);
+                    int textWidth = bounds.width();
+                    canvas.drawText(i + "",
+                            startLineX - (int) (textWidth / 2),
+                            textBaselineY,
+                            bottomTextPaint);
+                }
             } else {
                 // second Line
                 hashMarkPaint.setStrokeWidth(smallHashMarkWidth);
                 hashMarkPaint.setColor(smallHashMarkColor);
                 canvas.drawLine(startLineX,
-                        startDrawY + (int)(smallHashMarkHeight /2),
+                        smallHashStartY,
                         startLineX,
-                        startDrawY - (int) (smallHashMarkHeight /2),
+                        smallHashStartY + (int) (smallHashMarkHeight),
                         hashMarkPaint); // second line
 
             }

@@ -17,24 +17,24 @@ class RulerScroller extends HorizontalScrollView {
 
     public RulerScroller(Context context) {
         super(context);
-        setUpView(context, null);
+        setUpView(context, null, 0);
     }
 
     public RulerScroller(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setUpView(context, attrs);
+        setUpView(context, attrs, 0);
 
     }
 
     public RulerScroller(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setUpView(context, attrs);
+        setUpView(context, attrs, defStyleAttr);
     }
 
 
-    private void setUpView(Context context, AttributeSet attrs) {
+    private void setUpView(Context context, AttributeSet attrs, int defStyleAttr) {
         setUpAttributes(attrs);
-        final BarView draw = new BarView(context, attrs);
+        final BarView draw = new BarView(context, attrs, defStyleAttr);
         addView(draw);
     }
 
@@ -68,13 +68,13 @@ class RulerScroller extends HorizontalScrollView {
     }
 
     public void setCurrentValue(int value) {
-        if (value>rulerMaxValue ||value<rulerMinValue){
-            String message = " The Value "+value
-                    +" is not between Max Value "+rulerMaxValue
-                    +" and min  Value "+rulerMinValue;
+        if (value > rulerMaxValue || value < rulerMinValue) {
+            String message = " The Value " + value
+                    + " is not between Max Value " + rulerMaxValue
+                    + " and min  Value " + rulerMinValue;
             throw new IllegalArgumentException(message);
-        }else {
-            int scrollValue = (int) ((value * hashMarkDistance ) - rulerMinValue);
+        } else {
+            int scrollValue = (int) ((value * hashMarkDistance) - rulerMinValue);
             setScrollX(scrollValue);
         }
     }
