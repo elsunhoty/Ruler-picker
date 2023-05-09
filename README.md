@@ -53,6 +53,7 @@ You can specify the attributes from a layout XML like:
         app:ruler_long_hash_mark_text_size="12sp"
         app:ruler_long_hash_mark_width="2dp"
         app:ruler_max_value="300"
+        app:ruler_initial_value="152"
         app:ruler_small_hash_mark_color="#CFCFCF"
         app:ruler_small_hash_mark_height="30dp"
         app:ruler_small_hash_mark_width="1dp" />
@@ -60,25 +61,26 @@ You can specify the attributes from a layout XML like:
 
 - Library provides XML attributes to customize
 
-|Attribute|  Type   |Java/Kotlin|Description|
-|:---:|:-------:|:---:|:---:|
-|ruler_max_value|   int   |`NOT YET`|Change max value for ruler.|
-|ruler_hash_mark_interval|   int   |`NOT YET`|interval between two long hash mark.|
-|ruler_hash_mark_distance|   dim   |`NOT YET`|distance between every two hash mark.|
-|ruler_long_hash_mark_width|   dim   |`NOT YET`| .|
-|ruler_long_hash_mark_height|   dim   |`NOT YET`| .|
-|ruler_long_hash_mark_text_size|   dim   |`NOT YET`| .|
-|ruler_long_hash_mark_text_color|  color  |`NOT YET`| .|
-|ruler_long_hash_mark_color|  color  |`NOT YET`| .|
-|ruler_long_hash_mark_text_margin_top|   dim   |`NOT YET`| .|
-|ruler_small_hash_mark_width|   dim   |`NOT YET`| .|
-|ruler_small_hash_mark_height|   dim   |`NOT YET`| .|
-|ruler_small_hash_mark_color|  color  |`NOT YET`| .|
-|ruler_indicator_height|   dim   |`NOT YET`| .|
-|ruler_indicator_width|   dim   |`NOT YET`| .|
-|ruler_indicator_color|   dim   |`NOT YET`| .|
-|ruler_hash_mark_gravity|  enum   |`NOT YET`| .|
-|ruler_long_hash_mark_text_visible| boolean |`NOT YET`| .|
+|              Attribute               |  Type   |Java/Kotlin|              Description              |
+|:------------------------------------:|:-------:|:---:|:-------------------------------------:|
+|           ruler_max_value            |   int   |`NOT YET`|      Change max value for ruler.      |
+|           ruler_init_value           |   int   |`NOT YET`|                                       |
+|       ruler_hash_mark_interval       |   int   |`NOT YET`| interval between two long hash mark.  |
+|       ruler_hash_mark_distance       |   dim   |`NOT YET`| distance between every two hash mark. |
+|      ruler_long_hash_mark_width      |   dim   |`NOT YET`|                   .                   |
+|     ruler_long_hash_mark_height      |   dim   |`NOT YET`|                   .                   |
+|    ruler_long_hash_mark_text_size    |   dim   |`NOT YET`|                   .                   |
+|   ruler_long_hash_mark_text_color    |  color  |`NOT YET`|                   .                   |
+|      ruler_long_hash_mark_color      |  color  |`NOT YET`|                   .                   |
+| ruler_long_hash_mark_text_margin_top |   dim   |`NOT YET`|                   .                   |
+|     ruler_small_hash_mark_width      |   dim   |`NOT YET`|                   .                   |
+|     ruler_small_hash_mark_height     |   dim   |`NOT YET`|                   .                   |
+|     ruler_small_hash_mark_color      |  color  |`NOT YET`|                   .                   |
+|        ruler_indicator_height        |   dim   |`NOT YET`|                   .                   |
+|        ruler_indicator_width         |   dim   |`NOT YET`|                   .                   |
+|        ruler_indicator_color         |   dim   |`NOT YET`|                   .                   |
+|       ruler_hash_mark_gravity        |  enum   |`NOT YET`|                   .                   |
+|  ruler_long_hash_mark_text_visible   | boolean |`NOT YET`|                   .                   |
 
 
 ## Want to contribute?

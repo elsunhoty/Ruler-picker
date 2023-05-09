@@ -11,7 +11,8 @@ import com.elsunhoty.rulerpicker.R;
 
 class RulerScroller extends HorizontalScrollView {
     int rulerMinValue = 0;
-    int rulerMaxValue = Defaults.MAX_VALUE;
+    int rulerInitValue = Defaults.MIN_VALUE;
+    int rulerMaxValue = Defaults.MIN_VALUE;
     float hashMarkDistance = Defaults.HASH_MARK_DISTANCE;
     private OnRulerEvent mListener;
 
@@ -35,6 +36,7 @@ class RulerScroller extends HorizontalScrollView {
     private void setUpView(Context context, AttributeSet attrs, int defStyleAttr) {
         setUpAttributes(attrs);
         final BarView draw = new BarView(context, attrs, defStyleAttr);
+        draw.setId(generateViewId());
         addView(draw);
     }
 
@@ -47,6 +49,8 @@ class RulerScroller extends HorizontalScrollView {
                 Defaults.HASH_MARK_DISTANCE);
         rulerMaxValue = typedArray.getInt(R.styleable.RulerView_ruler_max_value,
                 Defaults.MAX_VALUE);
+        rulerInitValue = typedArray.getInt(R.styleable.RulerView_ruler_initial_value,
+                Defaults.MIN_VALUE);
     }
 
 
@@ -76,6 +80,16 @@ class RulerScroller extends HorizontalScrollView {
         } else {
             int scrollValue = (int) ((value * hashMarkDistance) - rulerMinValue);
             setScrollX(scrollValue);
+        }
+    }
+
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        if (rulerInitValue != Defaults.MIN_VALUE) {
+            setCurrentValue(rulerInitValue);
+            rulerInitValue = Defaults.MIN_VALUE;
         }
     }
 }

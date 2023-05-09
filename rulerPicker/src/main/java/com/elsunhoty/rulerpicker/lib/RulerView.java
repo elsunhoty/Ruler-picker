@@ -51,6 +51,7 @@ public class RulerView extends FrameLayout {
             setUpAttributes(attrs);
         }
         rulerScroller = new RulerScroller(context, attrs, defStyleAttr);
+        rulerScroller.setId(generateViewId());
         addView(rulerScroller);
 
         View indicator = new View(context);
@@ -71,6 +72,7 @@ public class RulerView extends FrameLayout {
         }
         indicator.setLayoutParams(params);
         indicator.setBackgroundColor(indicatorColor);
+        indicator.setId(generateViewId());
         addView(indicator, params);
     }
 

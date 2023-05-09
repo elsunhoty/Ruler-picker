@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="RulerView">
         <attr name="ruler_max_value" format="integer" />
+        <attr name="ruler_initial_value" format="integer" />
         <attr name="ruler_hash_mark_interval" format="integer"/>
         <attr name="ruler_hash_mark_distance" format="dimension"/>
         <attr name="ruler_long_hash_mark_width" format="dimension"/>
