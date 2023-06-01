@@ -21,24 +21,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
-        viewRuler= findViewById(R.id.viewRuler)
-        tvOnRulerValueChanges= findViewById(R.id.tvOnRulerValueChanges)
-        tvCurrentValue= findViewById(R.id.tvCurrentValue)
-        btnCurrentValue= findViewById(R.id.btnCurrentValue)
-        btnScrollToPosition= findViewById(R.id.btnScrollToPosition)
+        viewRuler = findViewById(R.id.viewRuler)
+        tvOnRulerValueChanges = findViewById(R.id.tvOnRulerValueChanges)
+        tvCurrentValue = findViewById(R.id.tvCurrentValue)
+        btnCurrentValue = findViewById(R.id.btnCurrentValue)
+        btnScrollToPosition = findViewById(R.id.btnScrollToPosition)
     }
 
     private fun actions() {
-        viewRuler.setOnRulerEvent {
+        viewRuler.setOnRulerEvent { value, fromUser ->
             tvOnRulerValueChanges.text =
-                "onRulerValueChanges : $it"
+                "onRulerValueChanges : $value from user $fromUser"
         }
-        btnCurrentValue.setOnClickListener { _->
-          val currentValue =  viewRuler.currentValue
+        btnCurrentValue.setOnClickListener { _ ->
+            val currentValue = viewRuler.currentValue
             tvCurrentValue.text =
                 "CurrentValue : $currentValue"
         }
-        btnScrollToPosition.setOnClickListener { _->
+        btnScrollToPosition.setOnClickListener { _ ->
             viewRuler.currentValue = 100
         }
     }

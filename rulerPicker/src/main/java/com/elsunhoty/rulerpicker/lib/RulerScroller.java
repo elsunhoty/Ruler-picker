@@ -15,6 +15,7 @@ class RulerScroller extends HorizontalScrollView {
     int rulerMaxValue = Defaults.MIN_VALUE;
     float hashMarkDistance = Defaults.HASH_MARK_DISTANCE;
     private OnRulerEvent mListener;
+    private boolean fromUser = true;
 
     public RulerScroller(Context context) {
         super(context);
@@ -58,7 +59,8 @@ class RulerScroller extends HorizontalScrollView {
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         int currentRealValue = (int) ((l + rulerMinValue) / hashMarkDistance);
         if (mListener != null)
-            mListener.onRulerValueChanges(currentRealValue);
+            mListener.onRulerValueChanges(currentRealValue, fromUser);
+        this.fromUser = true;
         super.onScrollChanged(l, t, oldl, oldt);
     }
 
@@ -72,6 +74,7 @@ class RulerScroller extends HorizontalScrollView {
     }
 
     public void setCurrentValue(int value) {
+        this.fromUser = false;
         if (value > rulerMaxValue || value < rulerMinValue) {
             String message = " The Value " + value
                     + " is not between Max Value " + rulerMaxValue
