@@ -83,6 +83,7 @@ class RulerScroller extends HorizontalScrollView {
         } else {
             int scrollValue = (int) ((value * hashMarkDistance) - rulerMinValue);
             setScrollX(scrollValue);
+            fling(0);
         }
     }
 

@@ -2,11 +2,13 @@ package com.elsunhoty.ruler
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import com.elsunhoty.rulerpicker.lib.RulerView
 
 class MainActivity : AppCompatActivity() {
+    private val TAG = "MainActivity"
     private lateinit var viewRuler: RulerView
     private lateinit var tvOnRulerValueChanges: TextView
     private lateinit var tvCurrentValue: TextView
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun actions() {
         viewRuler.setOnRulerEvent { value, fromUser ->
+            Log.d(TAG, "actions() called with: value = $value, fromUser = $fromUser")
             tvOnRulerValueChanges.text =
                 "onRulerValueChanges : $value from user $fromUser"
         }
