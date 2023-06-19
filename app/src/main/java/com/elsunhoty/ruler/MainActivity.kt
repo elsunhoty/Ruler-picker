@@ -2,11 +2,13 @@ package com.elsunhoty.ruler
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import com.elsunhoty.rulerpicker.lib.RulerView
 
 class MainActivity : AppCompatActivity() {
+    private val TAG = "MainActivity"
     private lateinit var viewRuler: RulerView
     private lateinit var tvOnRulerValueChanges: TextView
     private lateinit var tvCurrentValue: TextView
@@ -21,24 +23,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
-        viewRuler= findViewById(R.id.viewRuler)
-        tvOnRulerValueChanges= findViewById(R.id.tvOnRulerValueChanges)
-        tvCurrentValue= findViewById(R.id.tvCurrentValue)
-        btnCurrentValue= findViewById(R.id.btnCurrentValue)
-        btnScrollToPosition= findViewById(R.id.btnScrollToPosition)
+        viewRuler = findViewById(R.id.viewRuler)
+        tvOnRulerValueChanges = findViewById(R.id.tvOnRulerValueChanges)
+        tvCurrentValue = findViewById(R.id.tvCurrentValue)
+        btnCurrentValue = findViewById(R.id.btnCurrentValue)
+        btnScrollToPosition = findViewById(R.id.btnScrollToPosition)
     }
 
     private fun actions() {
-        viewRuler.setOnRulerEvent {
+        viewRuler.setOnRulerEvent { value, fromUser ->
+            Log.d(TAG, "actions() called with: value = $value, fromUser = $fromUser")
             tvOnRulerValueChanges.text =
-                "onRulerValueChanges : $it"
+                "onRulerValueChanges : $value from user $fromUser"
         }
-        btnCurrentValue.setOnClickListener { _->
-          val currentValue =  viewRuler.currentValue
+        btnCurrentValue.setOnClickListener { _ ->
+            val currentValue = viewRuler.currentValue
             tvCurrentValue.text =
                 "CurrentValue : $currentValue"
         }
-        btnScrollToPosition.setOnClickListener { _->
+        btnScrollToPosition.setOnClickListener { _ ->
             viewRuler.currentValue = 100
         }
     }
